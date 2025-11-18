@@ -1,4 +1,4 @@
-package com.example.SchoolWebApp;
+package com.example.SchoolWebApp.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;

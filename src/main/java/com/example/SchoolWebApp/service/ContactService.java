@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class ContactService {
@@ -25,4 +28,22 @@ public class ContactService {
              log.info("contact msg saved");
         return isSaved;
     }
+
+    public List<Contact> getMsgsWithOpenStatus() {
+        return contactRepository.findByStatus();
+    }
+
+    public boolean updateMsgStatus(int id, String updatedBy) {
+        Optional<Contact> contact = contactRepository.findById(id);
+
+        if (contact.isPresent()) {
+            contact.get().setStatus("Close");
+            contact.get().setUpdatedBy(updatedBy);
+            Contact saved = contactRepository.save(contact.get());
+            return saved != null;
+        } else {
+            return false;
+        }
+    }
+
 }
