@@ -33,12 +33,11 @@ public class ContactService {
         return contactRepository.findByStatus();
     }
 
-    public boolean updateMsgStatus(int id, String updatedBy) {
+    public boolean updateMsgStatus(int id) {
         Optional<Contact> contact = contactRepository.findById(id);
 
         if (contact.isPresent()) {
             contact.get().setStatus("Close");
-            contact.get().setUpdatedBy(updatedBy);
             Contact saved = contactRepository.save(contact.get());
             return saved != null;
         } else {
