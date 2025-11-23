@@ -18,13 +18,17 @@ public class loginController {
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public String login(@RequestParam(value = "error", required = false) String error,
-                        @RequestParam(value = "logout", required = false) String logout, Model model){
+                        @RequestParam(value = "logout", required = false) String logout,
+                        @RequestParam(value = "register", required = false)String register,  Model model){
             String messge = null;
             if(error != null){
                 messge = "Invalid user name or password";
             }
             else if(logout != null){
                 messge = "User logged out successfully";
+            }
+            else if(register != null){
+                messge = "Your registration is successful.login with refister credentials";
             }
 
             model.addAttribute("messge", messge);

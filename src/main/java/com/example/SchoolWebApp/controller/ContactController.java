@@ -34,8 +34,6 @@ public class ContactController {
 
    @PostMapping("/saveMsg")
     public String saveMsg(@Valid @ModelAttribute("contact") Contact contact, Errors errors){
-        contact.setCreatedBy("Anonymous");
-        contact.setCreatedAt(LocalDateTime.now());
         if(errors.hasErrors()){
             log.info("Contact from validation failed due to " + errors.toString());
             return "contact";
