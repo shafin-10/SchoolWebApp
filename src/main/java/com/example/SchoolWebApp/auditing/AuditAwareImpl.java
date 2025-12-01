@@ -1,4 +1,4 @@
-package com.example.SchoolWebApp.audit;
+package com.example.SchoolWebApp.auditing;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.context.SecurityContextHolder;

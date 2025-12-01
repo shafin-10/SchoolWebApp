@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -108,7 +109,9 @@ public class AdminController {
     @RequestMapping("/displayCourses")
     public ModelAndView displayCourses(Model model){
         ModelAndView modelAndView = new ModelAndView("courses_secure.html");
-        List<Courses> courses = coursesRepository.findAll();
+        //List<Courses> courses = coursesRepository.findAll();
+        List<Courses> courses = coursesRepository.findAll(Sort.by("fees").ascending()
+                .and(Sort.by("name").descending()));
         modelAndView.addObject("course", new Courses());
         modelAndView.addObject("courses",courses);
         return modelAndView;

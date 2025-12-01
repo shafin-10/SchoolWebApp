@@ -5,6 +5,10 @@ import com.example.SchoolWebApp.model.Contact;
 import com.example.SchoolWebApp.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +29,18 @@ public class ContactService {
             isSaved = true;
         }
         if(isSaved)
-             log.info("contact msg saved");
+            log.info("contact msg saved");
         return isSaved;
     }
 
-    public List<Contact> getMsgsWithOpenStatus() {
-        return contactRepository.findByStatus();
+    public Page<Contact> getMsgsWithOpenStatus(int pageNum,String sortField, String sortDir){
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
+                sortDir.equals("asc") ? Sort.by(sortField).ascending()
+                        : Sort.by(sortField).descending());
+        Page<Contact> msgPage = contactRepository.findByStatus(
+                SchoolConstants.OPEN,pageable);
+        return msgPage;
     }
 
     public boolean updateMsgStatus(int id) {
